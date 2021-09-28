@@ -43,7 +43,46 @@ namespace DeepSpace
 		descendientes del nodo que contiene al planeta del Bot */
 		public String Consulta2( ArbolGeneral<Planeta> arbol)
 		{
-			return "Implementar";
+			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
+			ArbolGeneral<Planeta> arbolAux;
+			string cadena = " ";
+			c.encolar(arbol);
+			c.encolar(null);
+			while (!c.esVacia())
+			{
+				arbolAux = c.desencolar();
+				if (arbolAux == null)
+				{
+					if (!c.esVacia())
+						c.encolar(null);
+				}
+				if (arbolAux != null && arbolAux.getDatoRaiz().EsPlanetaDeLaIA())
+				{
+					c.ResetCola();
+					foreach (var hijos in arbolAux.getHijos())
+					{
+						foreach (var hijosAux in hijos.getHijos())
+						{
+							c.encolar(hijosAux);
+						}
+					}
+					break;
+				}
+				else
+				{
+					if (arbolAux != null && arbolAux.getHijos().Count != 0)
+					{
+						foreach (var hijo in arbolAux.getHijos())
+							c.encolar(hijo);
+					}
+				}
+			}
+			while (!c.esVacia())
+			{
+				arbolAux = c.desencolar();
+				cadena += arbolAux.porNiveles();
+			}
+			return cadena;
 		}
 
 		/*Calcula y retorna en un texto la población total y promedio por cada nivel del árbol*/

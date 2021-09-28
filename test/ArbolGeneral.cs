@@ -41,6 +41,26 @@ namespace DeepSpace
 		public int nivel(T dato) {
 			return 0;
 		}
-	
+
+		public string porNiveles()
+		{
+			string cadena = "";
+			Cola<ArbolGeneral<T>> c = new Cola<ArbolGeneral<T>>();
+			ArbolGeneral<T> arbolAux;
+			c.encolar(this);
+
+			while (!c.esVacia())
+			{
+				arbolAux = c.desencolar();
+				cadena += "[" + arbolAux.getDatoRaiz() + "]" + " ";
+
+				foreach (var hijos in arbolAux.getHijos())
+				{
+					c.encolar(hijos);
+				}
+			}
+			return cadena;
+		}
+
 	}
 }
