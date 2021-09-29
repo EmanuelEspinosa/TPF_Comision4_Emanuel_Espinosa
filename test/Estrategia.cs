@@ -88,7 +88,43 @@ namespace DeepSpace
 		/*Calcula y retorna en un texto la población total y promedio por cada nivel del árbol*/
 		public String Consulta3( ArbolGeneral<Planeta> arbol)
 		{
-			return "Implementar";
+			/*Se calcula la poblacion total por cada nivel del árbol*/
+			/*Una vez obtenida la poblacion total por cada nivel, se calcula el promedio de 
+			 poblacion del árbol*/
+			/*Este método retorna la población por cada nivel, la población total del árbol
+			 y el promedio de población del mismo.
+			El promedio se calcula como: (suma de cantidad de nodos por nivel) / cantidad de niveles*/
+			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
+			ArbolGeneral<Planeta> arbolAux;
+			int contNiv = 0, cantNod = 0, contNodosNivel = 0;
+			string cadena = "";
+			c.encolar(arbol);
+			c.encolar(null);
+			while (!c.esVacia())
+			{
+				arbolAux = c.desencolar();
+				if (arbolAux == null)
+				{
+					contNiv++;
+					cadena += "[" + "Nivel " + contNiv + " ---> Población: " + cantNod + "]" + "\n";
+					contNodosNivel += cantNod;
+					if (!c.esVacia())
+						c.encolar(null);
+					cantNod = 0;
+				}
+				if (arbolAux != null && arbolAux.getHijos().Count == 0)
+				{
+					cantNod++;
+				}
+				if (arbolAux != null && arbolAux.getHijos().Count != 0)
+				{
+					cantNod++;
+					foreach (var hijo in arbolAux.getHijos())
+						c.encolar(hijo);
+				}
+			}
+			double prom = contNodosNivel / contNiv;
+			return cadena += "\nPoblación total del árbol: " + contNodosNivel + "\n" + "Promedio de población por nivel: " + prom;
 		}
 		
 		public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
