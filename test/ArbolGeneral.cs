@@ -36,8 +36,13 @@ namespace DeepSpace
 		public int altura() {
 			return 0;
 		}
-	
-		
+
+		public bool esVacio()
+		{
+			return this.dato == null;
+		}
+
+
 		public int nivel(T dato) {
 			return 0;
 		}
