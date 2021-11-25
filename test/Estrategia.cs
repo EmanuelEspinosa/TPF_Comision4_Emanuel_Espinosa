@@ -9,26 +9,26 @@ namespace DeepSpace
 		/* Calcula y retorna un texto con la distancia del camino que existe entre el planeta 
 		del Bot y la raíz */
 		public String Consulta1(ArbolGeneral<Planeta> arbol)
-		{
-			/*Se supone que el arbol pasado como parametro corresponde al nodo raiz*/
+        {
+			/*Se supone que el árbol pasado como parámetro corresponde al nodo raíz*/
 			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
 			ArbolGeneral<Planeta> arbolAux;
 			int contNiv = 0, nivel = 0;
-			c.encolar(arbol);
-			c.encolar(null);
+			c.encolar(arbol); 
+			c.encolar(null); 
 			while (!c.esVacia())
-			{
+            {
 				arbolAux = c.desencolar();
 				if (arbolAux == null)
-				{
+                {
 					contNiv++;
 					if (!c.esVacia())
 						c.encolar(null);
-				}
+                }
 				if (arbolAux != null && arbolAux.getDatoRaiz().EsPlanetaDeLaIA())
 					nivel = contNiv;
-				else
-				{
+                else
+                {
 					if (arbolAux != null && arbolAux.getHijos().Count != 0)
 					{
 						foreach (var hijo in arbolAux.getHijos())
@@ -36,7 +36,7 @@ namespace DeepSpace
 					}
 				}
 			}
-			return nivel.ToString();
+			return $"* Existe una distancia de < {nivel.ToString()} > entre el planeta del Bot y la raíz";
 		}
 
 		/* Retorna un texto con el listado de los planetas ubicados en todos los 
@@ -44,12 +44,12 @@ namespace DeepSpace
 		public String Consulta2(ArbolGeneral<Planeta> arbol)
 		{
 			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
-			ArbolGeneral<Planeta> arbolAux;
+			ArbolGeneral<Planeta> arbolAux = null;
 			string cadena = " ";
 			c.encolar(arbol);
 			c.encolar(null);
 			while (!c.esVacia())
-			{
+            {
 				arbolAux = c.desencolar();
 				if (arbolAux == null)
 				{
@@ -57,19 +57,12 @@ namespace DeepSpace
 						c.encolar(null);
 				}
 				if (arbolAux != null && arbolAux.getDatoRaiz().EsPlanetaDeLaIA())
-				{
-					c.ResetCola();
-					foreach (var hijos in arbolAux.getHijos())
-					{
-						foreach (var hijosAux in hijos.getHijos())
-						{
-							c.encolar(hijosAux);
-						}
-					}
+                {
+					cadena = arbolAux.porNiveles(); 
 					break;
 				}
 				else
-				{
+                {
 					if (arbolAux != null && arbolAux.getHijos().Count != 0)
 					{
 						foreach (var hijo in arbolAux.getHijos())
@@ -77,37 +70,29 @@ namespace DeepSpace
 					}
 				}
 			}
-			while (!c.esVacia())
-			{
-				arbolAux = c.desencolar();
-				cadena += arbolAux.porNiveles();
-			}
-			return cadena;
+			return "\n* El planeta del Bot es: " + "[" + arbolAux.getDatoRaiz() + "]" + "\n" +
+					" Los descendientes del Bot son: " + cadena;
+
+
 		}
 
 		/*Calcula y retorna en un texto la población total y promedio por cada nivel del árbol*/
 		public String Consulta3(ArbolGeneral<Planeta> arbol)
 		{
-			/*Se calcula la población total por cada nivel del árbol*/
-			/*Una vez obtenida la población total por cada nivel, se calcula el promedio de 
-			 población del árbol*/
-			/*Este método retorna la población por cada nivel, la población total del árbol
-			 y el promedio de población del mismo.
-			El promedio se calcula como: (suma de cantidad de nodos por nivel) / cantidad de niveles*/
 			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
 			ArbolGeneral<Planeta> arbolAux;
 			int contNiv = 0, cantNod = 0, contNodosNivel = 0;
-			string cadena = "";
+			string cadena = "\n\n\n* Población por niveles: \n";
 			c.encolar(arbol);
 			c.encolar(null);
 			while (!c.esVacia())
-			{
+            {
 				arbolAux = c.desencolar();
 				if (arbolAux == null)
 				{
 					contNiv++;
-					cadena += "[" + "Nivel " + contNiv + " ---> Población: " + cantNod + "]" + "\n";
 					contNodosNivel += cantNod;
+					cadena += " Nivel " + contNiv + " ---> Población: " + cantNod + "\n";
 					if (!c.esVacia())
 						c.encolar(null);
 					cantNod = 0;
@@ -124,13 +109,14 @@ namespace DeepSpace
 				}
 			}
 			double prom = contNodosNivel / contNiv;
-			return cadena += "\nPoblación total del árbol: " + contNodosNivel + "\n" + "Promedio de población por nivel: " + prom;
+			return cadena += "\n Población total del árbol: " + contNodosNivel + "\n"
+						  + " Promedio de población por nivel: " + prom;
 		}
+
+
 		private static Movimiento mov;
 		private static int j = 0, x = 0;
 		private static List<ArbolGeneral<Planeta>> lista = new List<ArbolGeneral<Planeta>>();
-
-
         public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
         {
             Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
