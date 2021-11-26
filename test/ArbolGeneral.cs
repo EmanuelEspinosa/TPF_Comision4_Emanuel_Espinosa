@@ -52,20 +52,23 @@ namespace DeepSpace
 			string cadena = "";
 			Cola<ArbolGeneral<T>> c = new Cola<ArbolGeneral<T>>();
 			ArbolGeneral<T> arbolAux;
-			c.encolar(this);
-
-			while (!c.esVacia())
-			{
-				arbolAux = c.desencolar();
-				cadena += "[" + arbolAux.getDatoRaiz() + "]" + " ";
-
-				foreach (var hijos in arbolAux.getHijos())
+			if(!this.esHoja())
+            {
+				c.encolar(this);
+				while (!c.esVacia())
 				{
-					c.encolar(hijos);
-				}
-			}
-			return cadena;
-		}
+					arbolAux = c.desencolar();
+					cadena += "[" + arbolAux.getDatoRaiz() + "]" + " ";
 
+					foreach (var hijos in arbolAux.getHijos())
+					{
+						c.encolar(hijos);
+					}
+				}
+				return cadena.Remove(0, 4);
+			}
+			else
+				return "No tiene descendientes";
+		}
 	}
 }

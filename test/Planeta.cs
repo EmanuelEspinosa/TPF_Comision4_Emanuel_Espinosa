@@ -106,6 +106,10 @@ namespace DeepSpace
         {
         	return (int) this.population;
         }
+        public override string ToString()
+        {
+            return population.ToString();
+        }
     }
 }
 

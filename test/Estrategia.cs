@@ -72,8 +72,6 @@ namespace DeepSpace
 			}
 			return "\n* El planeta del Bot es: " + "[" + arbolAux.getDatoRaiz() + "]" + "\n" +
 					" Los descendientes del Bot son: " + cadena;
-
-
 		}
 
 		/*Calcula y retorna en un texto la población total y promedio por cada nivel del árbol*/

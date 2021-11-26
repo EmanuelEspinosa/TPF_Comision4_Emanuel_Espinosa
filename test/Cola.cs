@@ -6,8 +6,6 @@ namespace DeepSpace
 
 	public class Cola<T>
 	{
-
-		
 		private List<T> datos = new List<T>();
 	
 		public void encolar(T elem) {
@@ -26,11 +24,6 @@ namespace DeepSpace
 		
 		public bool esVacia() {
 			return this.datos.Count == 0;
-		}
-
-		public void ResetCola()
-        {
-			datos.RemoveRange(0, datos.Count);
 		}
 	}
 }
